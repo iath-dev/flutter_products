@@ -84,7 +84,7 @@ class _LoginForm extends StatelessWidget {
               obscureText: true,
               decoration: _inputDecoration("Password", Icons.lock),
               onChanged: (value) => provider.password = value,
-              validator: (value) => (value != null && value.length > 6)
+              validator: (value) => (value != null && value.length >= 6)
                   ? null
                   : "Invalid password",
             ),

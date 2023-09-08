@@ -4,7 +4,8 @@ import 'package:flutter_products/theme/color_schemes.dart';
 class AppTheme {
   static ThemeData theme = ThemeData.light().copyWith(
       colorScheme: lightColorScheme,
-      scaffoldBackgroundColor: Colors.grey[200],
+      appBarTheme: const AppBarTheme(elevation: 0),
+      // scaffoldBackgroundColor: Colors.grey[200],
       inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(), isDense: true));
 
