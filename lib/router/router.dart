@@ -20,6 +20,11 @@ class AppRoutes {
         screen: const HomeScreen(),
         label: "Home",
         icon: Icons.home),
+    NavItem(
+        route: "edit",
+        screen: const EditScreen(),
+        label: "Edit",
+        icon: Icons.edit_square),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {

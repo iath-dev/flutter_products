@@ -5,7 +5,6 @@ class AppTheme {
   static ThemeData theme = ThemeData.light().copyWith(
       colorScheme: lightColorScheme,
       appBarTheme: const AppBarTheme(elevation: 0),
-      // scaffoldBackgroundColor: Colors.grey[200],
       inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(), isDense: true));
 
