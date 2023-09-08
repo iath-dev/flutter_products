@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_products/providers/login_provider.dart';
 import 'package:flutter_products/router/router.dart';
 import 'package:flutter_products/theme/theme.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(AppState());
+  runApp(const AppState());
 }
 
 class AppState extends StatelessWidget {
+  const AppState({super.key});
+
   @override
   Widget build(BuildContext context) {
     // return MultiProvider(
