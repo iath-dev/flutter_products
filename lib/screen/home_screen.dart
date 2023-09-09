@@ -24,24 +24,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Inventory"),
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(Icons.sort),
-            itemBuilder: (context) =>
-                sortBy.map((e) => PopupMenuItem(child: Text("By $e"))).toList(),
-          ),
-          IconButton(
-            onPressed: () =>
-                showSearch(context: context, delegate: ProductsDelegate()),
-            icon: const Icon(Icons.search),
-            splashRadius: 20,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.logout),
-            splashRadius: 20,
-          ),
-        ],
+        actions: _homeActions(sortBy, context),
       ),
       body: ListView.separated(
         itemCount: products.length,
@@ -59,5 +42,31 @@ class HomeScreen extends StatelessWidget {
           },
           child: const Icon(Icons.add)),
     );
+  }
+
+  List<Widget> _homeActions(List<String> sortBy, BuildContext context) {
+    return [
+      PopupMenuButton(
+        icon: const Icon(Icons.sort),
+        itemBuilder: (context) =>
+            sortBy.map((e) => PopupMenuItem(child: Text("By $e"))).toList(),
+      ),
+      IconButton(
+        onPressed: () =>
+            showSearch(context: context, delegate: ProductsDelegate()),
+        icon: const Icon(Icons.search),
+        splashRadius: 20,
+      ),
+      IconButton(
+        onPressed: () async {
+          final authService = Provider.of<AuthService>(context, listen: false);
+          await authService.logout();
+
+          Navigator.pushReplacementNamed(context, "login");
+        },
+        icon: const Icon(Icons.logout),
+        splashRadius: 20,
+      ),
+    ];
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_products/models/models.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class ProductService extends ChangeNotifier {
@@ -17,6 +18,9 @@ class ProductService extends ChangeNotifier {
   Product get selectedProduct => _selectedProduct!;
   set selectedProduct(Product value) => _selectedProduct = value;
 
+  final storage = const FlutterSecureStorage(
+      aOptions: AndroidOptions(encryptedSharedPreferences: true));
+
   ProductService() {
     loadProducts();
   }
@@ -27,8 +31,14 @@ class ProductService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, "products.json");
+    final token = await storage.read(key: "token");
+
+    final url = Uri.https(_baseUrl, "products.json", {"auth": token});
     final res = await http.get(url);
+
+    if (res.statusCode != 200) {
+      return [];
+    }
 
     final Map<String, dynamic> productsMap = json.decode(res.body);
 
@@ -60,7 +70,9 @@ class ProductService extends ChangeNotifier {
   }
 
   createProduct(Product product) async {
-    final url = Uri.https(_baseUrl, "products.json");
+    final token = await storage.read(key: "token");
+
+    final url = Uri.https(_baseUrl, "products.json", {"auth": token});
     final res = await http.post(url, body: product.toRawJson());
 
     product.id = json.decode(res.body)["name"];
@@ -70,7 +82,10 @@ class ProductService extends ChangeNotifier {
   }
 
   updateProduct(Product product) async {
-    final url = Uri.https(_baseUrl, "products/${product.id}.json");
+    final token = await storage.read(key: "token");
+
+    final url =
+        Uri.https(_baseUrl, "products/${product.id}.json", {"auth": token});
     await http.put(url, body: product.toRawJson());
 
     final index = _products.indexWhere((element) => element.id == product.id);

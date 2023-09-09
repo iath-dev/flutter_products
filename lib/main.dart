@@ -18,7 +18,11 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ProductService(),
           lazy: true,
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthService(),
+          lazy: true,
+        ),
       ],
       child: const MainApp(),
     );
@@ -32,6 +36,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: MessageService.key,
       theme: AppTheme.theme,
       darkTheme: AppTheme.darkTheme,
       initialRoute: AppRoutes.initialRoute,

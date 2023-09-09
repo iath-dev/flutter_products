@@ -4,8 +4,8 @@ import 'package:flutter_products/services/services.dart';
 import 'package:flutter_products/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        "Login",
+                        "Register",
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       const SizedBox(
@@ -41,11 +41,9 @@ class LoginScreen extends StatelessWidget {
                 height: 20,
               ),
               TextButton(
-                onPressed: () => Navigator.pushNamed(context, "register"),
-                child: const Text(
-                  "Create an account.",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Go lo login.",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               )
             ],
           ),
@@ -105,7 +103,7 @@ class _LoginForm extends StatelessWidget {
 
                         final service =
                             Provider.of<AuthService>(context, listen: false);
-                        String token = await service.loginUser(
+                        String token = await service.createUser(
                             provider.email, provider.password);
 
                         provider.loading = false;
@@ -113,7 +111,7 @@ class _LoginForm extends StatelessWidget {
                         if (token.isNotEmpty) {
                           Navigator.pushReplacementNamed(context, "home");
                         } else {
-                          MessageService.showSnackbar("Invalid user");
+                          MessageService.showSnackbar("User already exist");
                         }
                       },
                 child: Padding(
@@ -133,7 +131,7 @@ class _LoginForm extends StatelessWidget {
               strokeWidth: 2,
             ),
           )
-        : const Text("Login");
+        : const Text("Register");
   }
 
   InputDecoration _inputDecoration(String hint, IconData icon) {

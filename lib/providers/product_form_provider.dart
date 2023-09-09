@@ -10,6 +10,8 @@ class ProductFormProvider extends ChangeNotifier {
   File? newFile;
   bool get isValid => formKey.currentState?.validate() ?? false;
 
+  bool get loading => _loading;
+
   set loading(value) {
     _loading = value;
     notifyListeners();

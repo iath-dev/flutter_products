@@ -7,10 +7,13 @@ class AppRoutes {
 
   static final mainRoutes = <NavItem>[
     NavItem(
-        route: "login",
-        screen: const LoginScreen(),
-        label: "Login",
-        icon: Icons.settings),
+      route: "login",
+      screen: const LoginScreen(),
+    ),
+    NavItem(
+      route: "register",
+      screen: const RegisterScreen(),
+    ),
     ...menuOptions
   ];
 
