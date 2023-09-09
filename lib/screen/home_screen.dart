@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_products/helpers/helpers.dart';
+import 'package:flutter_products/models/models.dart';
+import 'package:flutter_products/screen/screen.dart';
+import 'package:flutter_products/services/services.dart';
 import 'package:flutter_products/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,6 +12,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sortBy = ['title', 'date', 'price'];
+
+    final productsService = Provider.of<ProductService>(context, listen: true);
+
+    if (productsService.isLoading) {
+      return const SplashScreen();
+    }
+
+    final products = productsService.products;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,15 +36,28 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.search),
             splashRadius: 20,
           ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.logout),
+            splashRadius: 20,
+          ),
         ],
       ),
       body: ListView.separated(
-        itemCount: 10,
+        itemCount: products.length,
         separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, index) => const ListItem(),
+        itemBuilder: (context, index) => ListItem(
+          product: products[index],
+        ),
       ),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            productsService.selectedProduct =
+                Product(available: false, name: "", price: 0.0);
+
+            Navigator.pushNamed(context, "edit");
+          },
+          child: const Icon(Icons.add)),
     );
   }
 }

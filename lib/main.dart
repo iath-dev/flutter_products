@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_products/router/router.dart';
+import 'package:flutter_products/services/services.dart';
 import 'package:flutter_products/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const AppState());
@@ -11,11 +13,15 @@ class AppState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MultiProvider(
-    //   providers: [ChangeNotifierProvider(create: (_) => LoginProvider())],
-    //   child: const MainApp(),
-    // );
-    return const MainApp();
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ProductService(),
+          lazy: true,
+        )
+      ],
+      child: const MainApp(),
+    );
   }
 }
 

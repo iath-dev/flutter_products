@@ -31,7 +31,10 @@ class _PurpleBox extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.indigo, Colors.indigo[700]!],
+          colors: [
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -101,7 +104,7 @@ class _Bubble extends StatelessWidget {
       height: 100,
       width: 100,
       decoration: const BoxDecoration(
-          shape: BoxShape.circle, color: Color.fromRGBO(255, 255, 255, 0.02)),
+          shape: BoxShape.circle, color: Color.fromRGBO(255, 255, 255, 0.07)),
     );
   }
 }
